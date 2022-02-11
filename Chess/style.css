@@ -1,0 +1,75 @@
+body {
+    background-color:rgb(27, 13, 0);
+    color: white;
+}
+
+:not(table:not(.chessBoard), tbody:not(.cbbody)) {
+    cursor: default;
+    user-select: none;
+    transition-duration: 0.5s;
+    margin: 0 auto;
+    text-align: center;
+}
+
+table {
+    display: flex;
+    flex-direction: column;
+}
+
+tr {
+    display: flex;
+    flex-direction: row;
+}
+
+.chessBoard {
+    font-size: 50px;
+}
+
+.chessPosition {
+    width: 1em;
+    height: 1em;
+    line-height: calc(1em + 5px);
+    color: black;
+}
+
+.chessPosition.dark {
+    background-color: rgb(114, 82, 55);
+}
+
+.chessPosition:not(.dark) {
+    background-color: rgb(230, 158, 100);
+}
+
+.chessPosition.legalMove.dark {
+    background-color: rgb(114, 55, 55);
+}
+
+.chessPosition.legalMove:not(.dark) {
+    background-color: rgb(230, 100, 100);
+}
+
+.chessPosition.selected {
+    filter: brightness(150%);
+}
+
+.chessPosition.hoverable:hover {
+    filter: brightness(125%);
+    cursor: pointer;
+}
+
+button {
+    padding: 5px;
+    background-color: rgb(255, 172, 89);
+    border: 2px solid rgb(114, 82, 55);
+    color: rgb(61, 44, 29);
+    font-weight: bold;
+}
+
+button:hover {
+    cursor: pointer;
+    filter: brightness(125%);
+}
+
+.chessVariantBtn {
+    width: 200px;
+}

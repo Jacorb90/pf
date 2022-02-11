@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Variants</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="scripts/vue.min.js"></script>
+    <script src="scripts/normalchess.js"></script>
+    <script src="scripts/controller.js"></script>
+
+    <script src="scripts/app.js" defer></script>
+</head>
+<body>
+    <div id="app">
+        <div v-if="!controller.init">
+            <br>
+            <table>
+                <tr>
+                    <td><h3>Chess Variants</h3><br></td>
+                    <td><h3>Options</h3><br></td>
+                </tr>
+                <tr>
+                    <td><button class="chessVariantBtn" onclick="controller.start(0)">Normal Chess</button></td>
+                    <td><button class="chessVariantBtn" onclick="Vue.set(controller.options, 0, !controller.options[0])">Opponent: {{controller.options[0] ? "Computer" : "Player"}}</button></td>
+                </tr>
+                <tr>
+                    <td><button class="chessVariantBtn" onclick="controller.start(1)">No-Castle Fischer Random Chess</button></td>
+                    <td><button class="chessVariantBtn" onclick="Vue.set(controller.options, 2, !controller.options[2])">User: {{controller.options[2] ? "Computer" : "Player"}}</button></td>
+                </tr>
+                <tr>
+                    <td><button class="chessVariantBtn" onclick="controller.start(2)">Horde Chess</button></td>
+                    <td><button class="chessVariantBtn" onclick="Vue.set(controller.options, 1, !controller.options[1])">Bottom Side: {{controller.options[1] ? "Black" : "White"}}</button></td>
+                </tr>
+            </table>
+        </div>
+        <br><br>
+        <div v-if="controller.init">
+            <table class="chessBoard" v-if="!controller.game.winner">
+                <tbody class="cbbody">
+                    <tr v-for="(row,r) in controller.game.board">
+                        <td v-for="(col,c) in row" v-bind:class="{chessPosition: true, dark: (r+c)%2==1, selected: controller.game.clickedSquare[0] == r && controller.game.clickedSquare[1] == c, legalMove: controller.game.legalMoves.some(move => move[0] == r && move[1] == c), hoverable: controller.game.canClick(r,c)}" v-on:click="controller.game.click(r,c)">{{controller.game.pieces[col]}}</td>
+                    </tr>
+                    <tr>
+                        <td><button onclick="controller.game.winner = 'Tie'">Call Draw</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div v-if="controller.game.winner">
+                <span v-if="controller.game.winner == 'Tie'">Tie...</span>
+                <span v-else>{{controller.game.winner}} wins!</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
